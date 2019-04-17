@@ -27,7 +27,7 @@ function ExpensesList(props) {
   const { classes, expenses } = props;
 
   console.log(expenses)
-  //const avgPricePerEvent = ticketsFilteredByEvent.reduce((prev, ticket) => prev + Number(ticket.price), 0)/ticketsFilteredByEvent.length
+  
   return (
     <Paper className={classes.root}>
        <Card>
