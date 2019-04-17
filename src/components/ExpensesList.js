@@ -7,8 +7,10 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import DeleteIcon from '@material-ui/icons/Delete';
-import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom'
+import Card from '@material-ui/core/Card';
+import { CardContent } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
   root: {
@@ -22,28 +24,37 @@ const styles = theme => ({
 });
 
 function ExpensesList(props) {
-  const { classes } = props;
+  const { classes, expenses } = props;
+
+  console.log(expenses)
+  //const avgPricePerEvent = ticketsFilteredByEvent.reduce((prev, ticket) => prev + Number(ticket.price), 0)/ticketsFilteredByEvent.length
   return (
     <Paper className={classes.root}>
+       <Card>
+         <CardContent>
+          <Typography gutterBottom variant="h4" component="h2">
+                    Your total expense is: € {expenses.reduce((prev, expense) => prev + expense.ammount,0)}
+              </Typography>
+          {/* <Typography gutterBottom variant="h4" component="h2">
+                    and average spend is: € {Math.round(expenses.reduce((prev, expense) => prev + expense.ammount,0)/expenses.length)}
+              </Typography> */}
+         </CardContent>
+       </Card>
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
             <TableCell>Description</TableCell>
             <TableCell align="right">Ammount</TableCell>
-            <TableCell align="right"></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {props.expenses.map(row => (
             <TableRow key={row.id}>
-              <TableCell component="th" scope="row">
-                {row.description}
+               <TableCell component="th" scope="row">
+               <Link to ={`/expenses/${row.id}/`} style={{ color: 'inherit', textDecoration: 'none'}}>{row.description}</Link>
               </TableCell>
               <TableCell align="right" component="th" scope="row">
                 € {row.ammount}
-              </TableCell>
-              <TableCell align="right" component="th" scope="row">
-              <Button><DeleteIcon onClick={() => props.delete(row.id)} /></Button>
               </TableCell>
             </TableRow>
           ))}

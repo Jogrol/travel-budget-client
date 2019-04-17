@@ -3,26 +3,27 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
-import { CardContent, IconButton } from '@material-ui/core';
+import { CardContent } from '@material-ui/core';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Dialog from '@material-ui/core/Dialog'
+import IconButton from '@material-ui/core/IconButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-export default function AddExpenseForm (props) {
+export default function UpdateExpenseForm (props) {
 
     return(
-        <div>
-        <IconButton onClick={props.handleClickOpen}><FontAwesomeIcon icon="plus-circle" /></IconButton>
+        <div style={{float: 'left'}}>
+        <IconButton onClick={props.handleClickOpen}> <FontAwesomeIcon icon="edit" /></IconButton>
         <Dialog
           open={props.open}
           onClose={props.handleClose}
           aria-labelledby="form-dialog-title"
         >
         <Card style={{display: 'inline-block'}}>
+            <CardContent  >
             <IconButton  style={{float: 'right'}} onClick={props.handleClickClose}><FontAwesomeIcon icon="times" /></IconButton>
-            <CardContent>
                 <Typography component="h4" variant="h5" gutterBottom>
-                    What did you spend?
+                    What would you like to change?
                 </Typography>
                 <form onSubmit={props.onSubmit} >
                     <TextField
@@ -50,9 +51,9 @@ export default function AddExpenseForm (props) {
                         }}
                     />
                     <br/>
-                    <Button type="submit" variant="contained">Submit</Button>
+                    <Button type="submit" variant="contained">Update</Button>
                 </form>
-            </CardContent>
+                </CardContent>
             </Card>
         </Dialog>
     </div>

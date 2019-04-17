@@ -1,23 +1,23 @@
 
 import React, { Component } from 'react'
-import AddExpenseForm from './AddExpenseForm'
 import gql from "graphql-tag";
 import { graphql} from "react-apollo"
+import UpdateExpenseForm from './UpdateExpenseForm'
 
-const CREATE_EXPENSE = gql`
-  mutation createExpense($description: String!, $ammount: Float!) {
-    createExpense(description: $description, ammount: $ammount) {
-      id
-      description
-      ammount
+const UPDATE_EXPENSE = gql`
+  mutation updateExpense($id: ID!, $description: String!, $ammount: Float!) {
+    updateExpense(id: $id, description: $description, ammount: $ammount) {
+        id
+        description
+        ammount
     }
   }
 `
-class AddExpenseContainer extends Component {
+class UpdateExpenseFormContainer extends Component {
 
     state = {
-        description: '',
-        ammount: ' ',
+        description: this.props.expense.description,
+        ammount: this.props.expense.ammount,
         open: false,
    
     }
@@ -35,22 +35,24 @@ class AddExpenseContainer extends Component {
           [event.target.name]: event.target.value
         })
       }
-
+      
     onSubmit = (event) => {
         event.preventDefault()
+        const id = this.props.expense.id
         const description = this.state.description
         const ammount = Number(this.state.ammount)
-        this.props.createExpense({
-          variables: {description, ammount}
+
+        this.setState({ open: false });
+        this.props.updateExpense({
+          variables: {id, description, ammount}
         })
         .catch(error => console.log(error))
-        this.setState({ open: false , description: '', ammount: ' '});
       }
 
     render() {
         return (
         <div>
-            <AddExpenseForm  
+            <UpdateExpenseForm  
                 onSubmit={this.onSubmit}
                 onChange={this.onChange}
                 values={this.state}
@@ -63,12 +65,12 @@ class AddExpenseContainer extends Component {
     }
 }
 
-const NewEntryWithData = graphql(CREATE_EXPENSE, {
-  name: "createExpense",
+const NewEntryWithData = graphql(UPDATE_EXPENSE, {
+  name: "updateExpense",
   options: {
-    refetchQueries: ['Expenses']
+    refetchQueries: ['Expense']
   }
-})(AddExpenseContainer);
+})(UpdateExpenseFormContainer);
 
 export default NewEntryWithData
 

@@ -4,16 +4,19 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import ApolloClient from "apollo-boost"
 import { ApolloProvider } from "react-apollo";
+import {BrowserRouter} from 'react-router-dom'
 
 
 const client = new ApolloClient({
-  // uri: "https://frozen-river-89623.herokuapp.com/"
-  uri: "http://localhost:4000"
+  uri: "https://frozen-river-89623.herokuapp.com/"
+  // uri: "http://localhost:4000"
 });
 
 ReactDOM.render(
     <ApolloProvider client={client}>
+      <BrowserRouter>
         <App />
+      </BrowserRouter>
     </ApolloProvider>
     , document.getElementById('root'));
 

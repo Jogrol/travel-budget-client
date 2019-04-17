@@ -12,6 +12,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import { Link } from 'react-router-dom'
 
 const styles = {
   root: {
@@ -51,33 +52,54 @@ class MenuAppBar extends React.Component {
 
     return (
       <div className={classes.root}>
-        <FormGroup>
+        {/* <FormGroup>
           <FormControlLabel
             control={
               <Switch checked={auth} onChange={this.handleChange} aria-label="LoginSwitch" />
             }
             label={auth ? 'Logout' : 'Login'}
           />
-        </FormGroup>
+        </FormGroup> */}
         <AppBar position="static">
           <Toolbar>
-            <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-              <MenuIcon />
+           
+            <IconButton className={classes.menuButton} color="inherit" aria-label="Menu"
+            aria-owns={open ? 'home-appbar' : undefined}
+            aria-haspopup="true"
+            onClick={this.handleMenu}
+            ><MenuIcon />
             </IconButton>
+                <Menu
+                  id="home-appbar"
+                  anchorEl={anchorEl}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'left',
+                  }}
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'left',
+                  }}
+                  open={open}
+                  onClose={this.handleClose}
+                >
+                 <MenuItem onClick={this.handleClose}> <Link to ={`/`} style={{ color: 'inherit', textDecoration: 'none'}}>Expenses</Link></MenuItem>
+                 <MenuItem onClick={this.handleClose}>Budget</MenuItem>
+                </Menu>
             <Typography variant="h6" color="inherit" className={classes.grow}>
               BudgetYourTrip
             </Typography>
             {auth && (
               <div>
-                <IconButton
+                {/* <IconButton
                   aria-owns={open ? 'menu-appbar' : undefined}
                   aria-haspopup="true"
                   onClick={this.handleMenu}
                   color="inherit"
                 >
                   <AccountCircle />
-                </IconButton>
-                <Menu
+                </IconButton> */}
+                {/* <Menu
                   id="menu-appbar"
                   anchorEl={anchorEl}
                   anchorOrigin={{
@@ -93,7 +115,7 @@ class MenuAppBar extends React.Component {
                 >
                   <MenuItem onClick={this.handleClose}>Profile</MenuItem>
                   <MenuItem onClick={this.handleClose}>My account</MenuItem>
-                </Menu>
+                </Menu> */}
               </div>
             )}
           </Toolbar>
